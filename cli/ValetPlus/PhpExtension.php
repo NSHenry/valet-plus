@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus;
+namespace NSHenry\ValetPlus;
 
 use Valet\Brew;
 use Valet\CommandLine;

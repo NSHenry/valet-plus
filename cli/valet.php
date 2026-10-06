@@ -61,7 +61,7 @@ $app
         info("\nInstalling Valet+ services");
 
         Mysql::install($mySqlVersion);
-        Mailhog::install(Configuration::read()['tld']);
+        Mailpit::install(Configuration::read()['tld']);
         Nginx::restart();
 
         // If 'with-binary' option is omitted, $withBinary is an empty array, we install all.
@@ -122,8 +122,8 @@ if (is_dir(VALET_HOME_PATH)) {
         $newTld = Configuration::read()['tld'];
 
         if ($newTld != $oldTld) {
-            Mailhog::updateDomain(Configuration::read()['tld']);
-            Mailhog::restart();
+            Mailpit::updateDomain(Configuration::read()['tld']);
+            Mailpit::restart();
 
             Elasticsearch::updateDomain(Configuration::read()['tld']);
 
@@ -142,7 +142,7 @@ if (is_dir(VALET_HOME_PATH)) {
         switch ($service) {
             case '':
                 Mysql::restart();
-                Mailhog::restart();
+                Mailpit::restart();
                 Varnish::restart();
                 RedisService::restart();
                 Rabbitmq::restart();
@@ -151,10 +151,14 @@ if (is_dir(VALET_HOME_PATH)) {
                 Mysql::restart();
 
                 return info('Mysql has been started.');
-            case 'mailhog':
-                Mailhog::restart();
+            case 'mailpit':
+                Mailpit::restart();
 
-                return info('Mailhog has been started.');
+                return info('Mailpit has been started.');
+            case 'mailhog':
+                Mailpit::restart();
+
+                return info('Mailpit has been started.');
             case 'varnish':
                 Varnish::restart();
 
@@ -180,7 +184,7 @@ if (is_dir(VALET_HOME_PATH)) {
         switch ($service) {
             case '':
                 Mysql::restart();
-                Mailhog::restart();
+                Mailpit::restart();
                 Varnish::restart();
                 RedisService::restart();
                 Rabbitmq::restart();
@@ -189,10 +193,14 @@ if (is_dir(VALET_HOME_PATH)) {
                 Mysql::restart();
 
                 return info('Mysql has been restarted.');
-            case 'mailhog':
-                Mailhog::restart();
+            case 'mailpit':
+                Mailpit::restart();
 
-                return info('Mailhog has been restarted.');
+                return info('Mailpit has been restarted.');
+            case 'mailhog':
+                Mailpit::restart();
+
+                return info('Mailpit has been restarted.');
             case 'varnish':
                 Varnish::restart();
 
@@ -218,7 +226,7 @@ if (is_dir(VALET_HOME_PATH)) {
         switch ($service) {
             case '':
                 Mysql::stop();
-                Mailhog::stop();
+                Mailpit::stop();
                 Varnish::stop();
                 RedisService::stop();
                 Rabbitmq::stop();
@@ -227,10 +235,14 @@ if (is_dir(VALET_HOME_PATH)) {
                 Mysql::stop();
 
                 return info('Mysql has been stopped.');
-            case 'mailhog':
-                Mailhog::stop();
+            case 'mailpit':
+                Mailpit::stop();
 
-                return info('Mailhog has been stopped.');
+                return info('Mailpit has been stopped.');
+            case 'mailhog':
+                Mailpit::stop();
+
+                return info('Mailpit has been stopped.');
             case 'varnish':
                 Varnish::stop();
 
@@ -264,8 +276,8 @@ if (is_dir(VALET_HOME_PATH)) {
 
             info('Removing mysql...');
             Mysql::uninstall();
-            info('Removing mailhog...');
-            Mailhog::uninstall();
+            info('Removing mailpit...');
+            Mailpit::uninstall();
             info('Removing binaries...');
             Binary::uninstall();
             info('Removing varnish...');
@@ -287,41 +299,48 @@ if (is_dir(VALET_HOME_PATH)) {
 
 
     /**
-     * Mailhog services.
+     * Mailpit services.
      */
+    $mailpitCommand = function (OutputInterface $output, string $mode = null) {
+        $modes = ['install', 'on', 'enable', 'off', 'disable', 'uninstall'];
+
+        if (!in_array($mode, $modes)) {
+            throw new RuntimeException(sprintf('Not enough arguments (missing: "mode"). Available modes: %s', implode(', ', $modes)));
+        }
+
+        switch ($mode) {
+            case 'install':
+                Mailpit::install(Configuration::read()['tld']);
+
+                return;
+            case 'enable':
+            case 'on':
+                Mailpit::enable();
+
+                return;
+            case 'disable':
+            case 'off':
+                Mailpit::disable();
+
+                return;
+            case 'uninstall':
+                Mailpit::uninstall();
+
+                return;
+        }
+
+        PhpFpm::restart();
+        Nginx::restart();
+    };
+
     $app
-        ->command('mailhog', function (OutputInterface $output, string $mode = null) {
-            $modes = ['install', 'on', 'enable', 'off', 'disable', 'uninstall'];
+        ->command('mailpit', $mailpitCommand)
+        ->descriptions('Enable/disable Mailpit')
+        ->addArgument('mode', InputArgument::REQUIRED, 'Available modes: ' . implode(', ', ['install', 'on', 'enable', 'off', 'disable', 'uninstall']));
 
-            if (!in_array($mode, $modes)) {
-                throw new RuntimeException(sprintf('Not enough arguments (missing: "mode"). Available modes: %s', implode(', ', $modes)));
-            }
-
-            switch ($mode) {
-                case 'install':
-                    Mailhog::install(Configuration::read()['tld']);
-
-                    return;
-                case 'enable':
-                case 'on':
-                    Mailhog::enable();
-
-                    return;
-                case 'disable':
-                case 'off':
-                    Mailhog::disable();
-
-                    return;
-                case 'uninstall':
-                    Mailhog::uninstall();
-
-                    return;
-            }
-
-            PhpFpm::restart();
-            Nginx::restart();
-        })
-        ->descriptions('Enable/disable Mailhog')
+    $app
+        ->command('mailhog', $mailpitCommand)
+        ->descriptions('Deprecated alias for Mailpit')
         ->addArgument('mode', InputArgument::REQUIRED, 'Available modes: ' . implode(', ', ['install', 'on', 'enable', 'off', 'disable', 'uninstall']));
 
     /**

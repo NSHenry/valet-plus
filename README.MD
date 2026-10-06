@@ -1,7 +1,7 @@
 <p align="center"><img width="200" src="images/logo.png"></p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/weprovide/valet-plus.svg?style=flat)](https://packagist.org/packages/weprovide/valet-plus)
-[![Downloads on Packagist](https://img.shields.io/packagist/dt/weprovide/valet-plus.svg?style=flat)](https://packagist.org/packages/weprovide/valet-plus)
+<!-- [![Latest Version on Packagist](https://img.shields.io/packagist/v/weprovide/valet-plus.svg?style=flat)](https://packagist.org/packages/weprovide/valet-plus) -->
+<!-- [![Downloads on Packagist](https://img.shields.io/packagist/dt/weprovide/valet-plus.svg?style=flat)](https://packagist.org/packages/weprovide/valet-plus) -->
 
 ## Introduction
 
@@ -33,7 +33,7 @@ Make sure your sure the `$HOME/.composer/vendor/bin` directory is in your system
 
 Install Valet+ 3.x with composer:
 ```shell
-composer global require weprovide/valet-plus
+composer global require nshenry/valet-plus
 ```
 
 Finally, you may execute the Valet+ `install` command. This will install and configure Valet+, Nginx, DnsMasq and other
@@ -56,7 +56,7 @@ Here are a few key differences compared to the original Valet:
 - PHP extensions (~~mcrypt~~, ~~intl~~, ~~opcache~~, yaml, apcu, ds, imagick)
 - MySQL (mysql@5.7, mysql@8.0, mysql@8.1, mariadb)
   - DB commands (list, create, drop, reset, (re)import, export, ~~open~~)
-- Mailhog (on/off mode)
+- Mailpit (on/off mode)
 - Varnish (on/off mode)
 - Redis (on/off mode)
 - Rabbitmq (on/off mode)
@@ -80,10 +80,3 @@ Here are a few key differences compared to the original Valet:
 
 
 
-## Get in touch
-
-[![slack](https://p9.zdassets.com/hc/theme_assets/138842/200037786/logo.png)](https://join.slack.com/t/valet-plus/shared_invite/enQtNDE2MjU2NzgyNjQwLWFiYWNjOWFhOWQ2ZDcyOTEyZTA2MzAzOWYyYzYwMTYzODVlMGE3ZDg3ZWQ1M2JmN2M0OGY3OGUwMDI3NDM1NDU)
-
-We have a slack workspace available [which you can join](https://join.slack.com/t/valet-plus/shared_invite/enQtNDE2MjU2NzgyNjQwLWFiYWNjOWFhOWQ2ZDcyOTEyZTA2MzAzOWYyYzYwMTYzODVlMGE3ZDg3ZWQ1M2JmN2M0OGY3OGUwMDI3NDM1NDU).
-
-Yes, we have a Valet+ fan page https://www.weprovide.com/valet-plus

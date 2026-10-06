@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus\Extended;
+namespace NSHenry\ValetPlus\Extended;
 
 use Illuminate\Container\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -13,8 +13,8 @@ use Valet\Filesystem;
 use Valet\Nginx;
 use Valet\PhpFpm as ValetPhpFpm;
 use Valet\Site;
-use WeProvide\ValetPlus\Event\DataEvent;
-use WeProvide\ValetPlus\PhpExtension;
+use NSHenry\ValetPlus\Event\DataEvent;
+use NSHenry\ValetPlus\PhpExtension;
 
 class PhpFpm extends ValetPhpFpm
 {

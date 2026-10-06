@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus;
+namespace NSHenry\ValetPlus;
 
 use Valet\CommandLine;
 use Valet\Drivers\ValetDriver;
@@ -50,7 +50,7 @@ class DriverConfigurator
         $valetDriver  = ValetDriver::assign(getcwd(), basename(getcwd()), '/');
         $classNameArr = explode('\\', get_class($valetDriver));
         $className    = end($classNameArr);
-        $className    = "WeProvide\ValetPlus\DriverConfigs\\{$className}";
+        $className    = "NSHenry\ValetPlus\DriverConfigs\\{$className}";
 
         try {
             $driver = new $className(

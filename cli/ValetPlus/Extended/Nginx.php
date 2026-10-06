@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus\Extended;
+namespace NSHenry\ValetPlus\Extended;
 
 use Valet\Nginx as ValetNginx;
 

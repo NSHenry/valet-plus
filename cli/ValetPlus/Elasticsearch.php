@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus;
+namespace NSHenry\ValetPlus;
 
 use DomainException;
 use Valet\Brew;
 use Valet\CommandLine;
 use Valet\Filesystem;
-use WeProvide\ValetPlus\Extended\Site;
+use NSHenry\ValetPlus\Extended\Site;
 
 use function Valet\info;
 

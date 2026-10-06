@@ -17,13 +17,13 @@ fi
 # Valet CLI script which is written in PHP. Will use PHP to do it.
 if [ ! -f "$DIR/cli/valet.php" ]
 then
-    DIR=$(php -r "echo realpath('$DIR/../weprovide/valet-plus');")
+    DIR=$(php -r "echo realpath('$DIR/../nshenry/valet-plus');")
 fi
 
 # Valet is a dependency of Valet+. So, when we're developing on it, it's always in the vendor directory.
-# When we are a user (composer global require weprovide/valet-plus) the following directories are used.
+# When we are a user (composer global require nshenry/valet-plus) the following directories are used.
 #   laravel/valet is installed in /Users/<user>/.composer/vendor/laravel/valet/valet
-#   weprovide/valet-plus is installed in /Users/<user>/.composer/vendor/weprovide/valet-plus/valet
+#   nshenry/valet-plus is installed in /Users/<user>/.composer/vendor/nshenry/valet-plus/valet
 LARAVEL_DIR="$DIR/vendor/laravel/valet"
 if [ ! -d "$LARAVEL_DIR" ]; then
     LARAVEL_DIR=$(php -r "echo realpath('$DIR/../../laravel/valet');")
