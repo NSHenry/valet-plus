@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus\DriverConfigs;
+namespace NSHenry\ValetPlus\DriverConfigs;
 
-use WeProvide\ValetPlus\DriverConfigurator;
+use NSHenry\ValetPlus\DriverConfigurator;
 
 use function Valet\info;
 use function Valet\output;

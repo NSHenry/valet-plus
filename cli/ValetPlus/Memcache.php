@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus;
+namespace NSHenry\ValetPlus;
 
 class Memcache extends AbstractPhpExtension
 {

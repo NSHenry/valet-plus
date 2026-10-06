@@ -8,4 +8,4 @@ $container = Container::getInstance();
 $container->instance('event_dispatcher', new EventDispatcher());
 
 // Register classes to events.
-Mailhog::register();
+Mailpit::register();

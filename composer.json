@@ -1,11 +1,11 @@
 {
-    "name": "weprovide/valet-plus",
+    "name": "nshenry/valet-plus",
     "description": "Blazing fast macOS PHP development environment",
     "license": "MIT",
     "authors": [
         {
-            "name": "Mischa Braam",
-            "email": "mischa.braam@iodigital.com"
+            "name": "Nate Henry",
+            "email": "nateth@gmail.com"
         }
     ],
     "autoload": {
@@ -13,7 +13,7 @@
             "cli/includes/facades.php"
         ],
         "psr-4": {
-            "WeProvide\\ValetPlus\\": "cli/ValetPlus/"
+            "NSHenry\\ValetPlus\\": "cli/ValetPlus/"
         }
     },
     "config": {

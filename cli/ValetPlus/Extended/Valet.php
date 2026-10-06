@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus\Extended;
+namespace NSHenry\ValetPlus\Extended;
 
 use GuzzleHttp\Client;
 use Valet\Valet as ValetValet;
@@ -18,7 +18,7 @@ class Valet extends ValetValet
      */
     public function onLatestPlusVersion(string $currentVersion): bool
     {
-        $url = 'https://api.github.com/repos/weprovide/valet-plus/releases/latest';
+        $url = 'https://api.github.com/repos/nshenry/valet-plus/releases/latest';
         $response = json_decode((string) (new Client())->get($url)->getBody());
 
         return version_compare($currentVersion, trim($response->tag_name, 'v'), '>=');

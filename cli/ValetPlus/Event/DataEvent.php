@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus\Event;
+namespace NSHenry\ValetPlus\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

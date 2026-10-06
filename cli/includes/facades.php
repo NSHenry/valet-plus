@@ -9,7 +9,7 @@ class ValetPlusFacade
      */
     public static function containerKey(): string
     {
-        return 'WeProvide\\ValetPlus\\'.basename(str_replace('\\', '/', get_called_class()));
+        return 'NSHenry\\ValetPlus\\'.basename(str_replace('\\', '/', get_called_class()));
     }
 
     /**
@@ -33,6 +33,9 @@ class Mysql extends ValetPlusFacade
 {
 }
 class Mailhog extends ValetPlusFacade
+{
+}
+class Mailpit extends ValetPlusFacade
 {
 }
 class Elasticsearch extends ValetPlusFacade

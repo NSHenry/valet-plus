@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace WeProvide\ValetPlus\Extended;
+namespace NSHenry\ValetPlus\Extended;
 
 use Valet\Brew;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Filesystem;
 use Valet\Status as ValetStatus;
-use WeProvide\ValetPlus\Binary;
-use WeProvide\ValetPlus\Mailhog;
-use WeProvide\ValetPlus\Mysql;
-use WeProvide\ValetPlus\Rabbitmq;
-use WeProvide\ValetPlus\RedisService;
-use WeProvide\ValetPlus\Varnish;
+use NSHenry\ValetPlus\Binary;
+use NSHenry\ValetPlus\Mailpit;
+use NSHenry\ValetPlus\Mysql;
+use NSHenry\ValetPlus\Rabbitmq;
+use NSHenry\ValetPlus\RedisService;
+use NSHenry\ValetPlus\Varnish;
 
 class Status extends ValetStatus
 {
     /** @var Mysql */
     protected $mysql;
-    /** @var Mailhog */
-    protected $mailhog;
+    /** @var Mailpit */
+    protected $mailpit;
     /** @var Varnish */
     protected $varnish;
     /** @var RedisService */
@@ -37,7 +37,7 @@ class Status extends ValetStatus
      * @param CommandLine $cli
      * @param Filesystem $files
      * @param Mysql $mysql
-     * @param Mailhog $mailhog
+     * @param Mailpit $mailpit
      * @param Varnish $varnish
      * @param RedisService $redis
      * @param Rabbitmq $rabbitmq
@@ -48,7 +48,7 @@ class Status extends ValetStatus
         CommandLine $cli,
         Filesystem $files,
         Mysql $mysql,
-        Mailhog $mailhog,
+        Mailpit $mailpit,
         Varnish $varnish,
         RedisService $redis,
         Rabbitmq $rabbitmq,
@@ -57,7 +57,7 @@ class Status extends ValetStatus
         parent::__construct($config, $brew, $cli, $files);
 
         $this->mysql    = $mysql;
-        $this->mailhog  = $mailhog;
+        $this->mailpit  = $mailpit;
         $this->varnish  = $varnish;
         $this->redis    = $redis;
         $this->rabbitmq = $rabbitmq;
@@ -80,14 +80,14 @@ class Status extends ValetStatus
             'check'       => function () {
                 return $this->mysql->installedVersion();
             },
-            'debug'       => 'Run `composer require weprovide/valet-plus` and `valet-plus install`.'
+            'debug'       => 'Run `composer require nshenry/valet-plus` and `valet-plus install`.'
         ];
         $checks[] = [
-            'description' => '[Valet+] Is Mailhog installed?',
+            'description' => '[Valet+] Is Mailpit installed?',
             'check'       => function () {
-                return $this->mailhog->installed();
+                return $this->mailpit->installed();
             },
-            'debug'       => 'Run `composer require weprovide/valet-plus` and `valet-plus install`.'
+            'debug'       => 'Run `composer require nshenry/valet-plus` and `valet-plus install`.'
         ];
 
         if ($this->varnish->installed() || $this->varnish->isEnabled()) {
