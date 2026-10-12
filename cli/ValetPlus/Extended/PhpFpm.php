@@ -108,6 +108,9 @@ class PhpFpm extends ValetPhpFpm
         // Add performance ini settings.
         $contents = $this->files->get(__DIR__ . '/../../stubs/z-performance.ini'); //@todo; remove file on uninstall?
         $contents = str_replace('TIMEZONE', $systemZoneName, $contents);
+        if (version_compare($phpVersion, '8.5', '>=')) {
+            $contents = preg_replace('/^opcache\.file_cache=.*$/m', 'opcache.file_cache=', $contents);
+        }
         $this->files->putAsUser(
             $destDir . 'z-performance.ini',
             $contents
