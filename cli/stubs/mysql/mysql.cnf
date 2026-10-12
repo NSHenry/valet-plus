@@ -1,7 +1,6 @@
 [mysqld]
 bind-address=127.0.0.1
 mysqlx-bind-address=127.0.0.1
-default_authentication_plugin=mysql_native_password
 
 [client]
 user=root
@@ -32,6 +31,7 @@ innodb_log_file_size=25M
 interactive_timeout=3600
 max_connect_errors=1000000
 thread_cache_size=1024
+mysql_native_password=ON
 
 [mysqld_safe]
 open_files_limit=262144

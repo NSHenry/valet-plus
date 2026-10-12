@@ -27,7 +27,7 @@ class Mysql
     private const MYSQL_DATA_DIR = 'var/mysql';
     private const MYSQL_ROOT_PASSWORD = 'root';
     private const MYSQL_DEFAULT_VERSION = 'mysql@5.7';
-    private const MYSQL_SUPPORTED_VERSIONS = ['mysql', 'mysql@8.0', 'mysql@5.7', 'mariadb'];
+    private const MYSQL_SUPPORTED_VERSIONS = ['mysql@8.4', 'mysql@8.0', 'mysql@5.7', 'mariadb'];
 
     /** @var Brew */
     protected $brew;
@@ -211,7 +211,7 @@ class Mysql
                 break;
 
             case 'mysql@8.0':
-            case 'mysql':
+            case 'mysql@8.4':
                 $retval = $this->query(
                     "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '" . $newPwd . "';",
                     false,

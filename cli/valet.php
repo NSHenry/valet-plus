@@ -41,18 +41,18 @@ $app->setName(' ' . $valetPlusName . ' ' . $valetPlusVersion . "\n");
  */
 $cmd = $app->get('install');
 $app
-    ->command('install', function (InputInterface $input, OutputInterface $output, $withMariadb, $withMysql80, $withMysql81, $withBinary) use ($cmd) {
-        $types = $withMariadb + $withMysql80 + $withMysql81;
+    ->command('install', function (InputInterface $input, OutputInterface $output, $withMariadb, $withMysql80, $withMysql84, $withBinary) use ($cmd) {
+        $types = $withMariadb + $withMysql80 + $withMysql84;
         if ($types > 1) {
             throw new RuntimeException('Cannot install Valet+ with multiple DBMS, please pick one.');
         }
         $mySqlVersion = $withMariadb ? 'mariadb' : 'mysql@5.7';
-        $mySqlVersion = $withMysql81 ? 'mysql' : $mySqlVersion;
+        $mySqlVersion = $withMysql84 ? 'mysql@8.4' : $mySqlVersion;
         $mySqlVersion = $withMysql80 ? 'mysql@8.0' : $mySqlVersion;
 
         // Add custom options to original command to fake 'm.
         $cmd->addOption('with-mysql80', null, InputOption::VALUE_NONE)
-            ->addOption('with-mysql81', null, InputOption::VALUE_NONE)
+            ->addOption('with-mysql84', null, InputOption::VALUE_NONE)
             ->addOption('with-mariadb', null, InputOption::VALUE_NONE)
             ->addOption('with-binary', 'b', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL);
         // Run original command.
@@ -79,7 +79,7 @@ $app
     })
     ->descriptions('Install the Valet+ services, with MySQL 5.7 as default DBMS.')
     ->addOption('with-mysql80', null, InputOption::VALUE_NONE, "Install with MySQL 8.0")
-    ->addOption('with-mysql81', null, InputOption::VALUE_NONE, "Install with MySQL 8.1")
+    ->addOption('with-mysql84', null, InputOption::VALUE_NONE, "Install with MySQL 8.4")
     ->addOption('with-mariadb', null, InputOption::VALUE_NONE, "Install with MariaDB")
     ->addOption(
         'with-binary',
