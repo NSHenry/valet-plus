@@ -42,6 +42,9 @@ services. In addition, use `--help` to see all installation options.
 valet-plus install
 ```
 
+If you are on a Homebrew version that enforces tap trust for formulas, Valet+ now runs the required
+`brew trust --formula <tap>/<formula>` command automatically for supported tapped binaries (for example Shopware CLI).
+
 The daemons Valet+ depends on will be configured to launch when your system starts. Once Valet+ is installed, try pinging
 any `*.test` domain on your terminal using a command such as `ping foobar.test`. If Valet+ is installed correctly you 
 should see this domain responding on `127.0.0.1`.
@@ -67,7 +70,7 @@ Here are a few key differences compared to the original Valet:
 - ~~Ioncube~~
 - Rewrite/unrewrite public domain to local environment
 - ~~DevTools~~
-- Binaries (magerun, magerun2, drush, wp-cli, shopware-cli)
+- Binaries (magerun, magerun2, drush, wp-cli, pv, shopware-cli)
 
 ### Changes vs Valet+ 2
 
@@ -77,6 +80,5 @@ Here are a few key differences compared to the original Valet:
 - Use `127.0.0.1` as Redis host instead of `/tmp/redis.sock`.
 - Choose which binaries to install (default all) and self-update on `valet-plus install` command.
 - Adds dependency on Docker for Elasticsearch, see https://docs.docker.com/desktop/install/mac-install/
-
 
 

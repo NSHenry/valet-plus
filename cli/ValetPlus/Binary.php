@@ -23,6 +23,8 @@ class Binary
     /** @var string */
     protected const WP_CLI = 'wp';
     /** @var string */
+    protected const PV = 'pv';
+    /** @var string */
     protected const SHOPWARE_CLI = 'shopware-cli';
 
     /**
@@ -55,6 +57,9 @@ class Binary
         ],
         self::WP_CLI         => [
             'brew_formula' => 'wp-cli'
+        ],
+        self::PV             => [
+            'brew_formula' => 'pv'
         ],
         self::SHOPWARE_CLI   => [
             'brew_formula' => 'shopware-cli',
@@ -182,6 +187,8 @@ class Binary
                 [static::SUPPORTED_BINARIES[$binary]['brew_tap']] :
                 []
             );
+
+            $this->ensureFormulaTapTrusted($formula, $tap);
             $this->brew->ensureInstalled($formula, [], $tap);
         }
     }
@@ -244,7 +251,46 @@ class Binary
                 [static::SUPPORTED_BINARIES[$binary]['brew_tap']] :
                 []
             );
+
+            $this->ensureFormulaTapTrusted($formula, $tap);
             $this->brew->installOrFail($formula, [], $tap);
+        }
+    }
+
+    /**
+     * Ensure Homebrew trusts a tapped formula when Homebrew's trust command is available.
+     *
+     * @param string $formula
+     * @param string[] $tap
+     */
+    protected function ensureFormulaTapTrusted($formula, array $tap): void
+    {
+        if (count($tap) === 0) {
+            return;
+        }
+
+        $hasTrustCommand = trim(
+            $this->cli->runAsUser('if brew help trust >/dev/null 2>&1; then echo "yes"; else echo "no"; fi')
+        );
+
+        if ($hasTrustCommand !== 'yes') {
+            $tappedFormulas = array_map(
+                static function (string $tapName) use ($formula): string {
+                    return "$tapName/$formula";
+                },
+                $tap
+            );
+            warning(
+                'Homebrew trust command not available; skipping trust step for formula ' .
+                implode(', ', $tappedFormulas)
+            );
+
+            return;
+        }
+
+        foreach ($tap as $tapName) {
+            info("Trusting Homebrew formula: $tapName/$formula");
+            $this->cli->runAsUser("brew trust --formula $tapName/$formula");
         }
     }
 
