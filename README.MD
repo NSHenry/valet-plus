@@ -1,7 +1,8 @@
 <p align="center"><img width="200" src="images/logo.png"></p>
 
-<!-- [![Latest Version on Packagist](https://img.shields.io/packagist/v/weprovide/valet-plus.svg?style=flat)](https://packagist.org/packages/weprovide/valet-plus) -->
-<!-- [![Downloads on Packagist](https://img.shields.io/packagist/dt/weprovide/valet-plus.svg?style=flat)](https://packagist.org/packages/weprovide/valet-plus) -->
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/nshenry/valet-plus.svg?style=flat)](https://packagist.org/packages/nshenry/valet-plus)
+
+[![Downloads on Packagist](https://img.shields.io/packagist/dt/nshenry/valet-plus.svg?style=flat)](https://packagist.org/packages/nshenry/valet-plus)
 
 ## Introduction
 
