@@ -269,25 +269,6 @@ class Binary
             return;
         }
 
-        $hasTrustCommand = trim(
-            $this->cli->runAsUser('if brew help trust >/dev/null 2>&1; then echo "yes"; else echo "no"; fi')
-        );
-
-        if ($hasTrustCommand !== 'yes') {
-            $tappedFormulas = array_map(
-                static function (string $tapName) use ($formula): string {
-                    return "$tapName/$formula";
-                },
-                $tap
-            );
-            warning(
-                'Homebrew trust command not available; skipping trust step for formula ' .
-                implode(', ', $tappedFormulas)
-            );
-
-            return;
-        }
-
         foreach ($tap as $tapName) {
             info("Trusting Homebrew formula: $tapName/$formula");
             $this->cli->runAsUser("brew trust --formula $tapName/$formula");
