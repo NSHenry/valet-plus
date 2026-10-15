@@ -92,6 +92,8 @@ class PhpExtension
     protected $cli;
     /** @var Filesystem */
     protected $files;
+    /** @var bool */
+    protected $tapTrusted = false;
 
     /**
      * @param Brew $brew
@@ -115,6 +117,8 @@ class PhpExtension
     public function installExtensions($phpVersion, $onlyDefaults = true)
     {
         info("Installing extensions for PHP " . $phpVersion);
+        $this->ensureTapTrusted();
+
         foreach (static::PHP_EXTENSIONS as $extension => $settings) {
             if ($onlyDefaults && $this->isDefaultExtension($extension) === false) {
                 continue;
@@ -151,6 +155,8 @@ class PhpExtension
     public function uninstallExtensions($phpVersion, $phpIniConfigPath)
     {
         info("Uninstalling extensions for PHP " . $phpVersion);
+        $this->ensureTapTrusted();
+
         foreach (static::PHP_EXTENSIONS as $extension => $settings) {
             if ($this->uninstallExtension($extension, $phpVersion, $phpIniConfigPath)) {
             }
@@ -179,9 +185,35 @@ class PhpExtension
      */
     public function isInstalled($extension, $phpVersion)
     {
+        // `brew info` refuses to load formulae from an untrusted tap, which would
+        // make an installed extension look uninstalled.
+        $this->ensureTapTrusted();
+
         $formula = $this->getExtensionFormula($extension, $phpVersion);
 
         return $this->brew->installed($formula);
+    }
+
+    /**
+     * Tap and trust the extensions tap once per run. Newer Homebrew versions refuse to
+     * load formulae from third-party taps until they are trusted with `brew trust`.
+     * Older versions don't have the `trust` command; that failure is ignored.
+     */
+    protected function ensureTapTrusted(): void
+    {
+        if ($this->tapTrusted) {
+            return;
+        }
+
+        $this->brew->tap([static::PHP_EXTENSIONS_BREW_TAP]);
+        $this->cli->runAsUser(
+            'brew trust ' . static::PHP_EXTENSIONS_BREW_TAP,
+            function ($exitCode, $output) {
+                // Ignore: pre-trust Homebrew versions don't need (or support) this.
+            }
+        );
+
+        $this->tapTrusted = true;
     }
 
     /**
@@ -194,6 +226,7 @@ class PhpExtension
      */
     protected function install($extension, $phpVersion)
     {
+        $this->ensureTapTrusted();
         $installed = false;
 
         if ($this->hasBrewDependency($extension)) {
@@ -235,6 +268,7 @@ class PhpExtension
      */
     protected function uninstall($extension, $phpVersion, $phpIniConfigPath)
     {
+        $this->ensureTapTrusted();
         $uninstalled = false;
 
         if ($this->hasExtraPhpExtensions($extension)) {

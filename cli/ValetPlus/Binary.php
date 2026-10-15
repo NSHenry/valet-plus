@@ -258,7 +258,7 @@ class Binary
     }
 
     /**
-     * Ensure Homebrew trusts a tapped formula when Homebrew's trust command is available.
+     * Ensure Homebrew trusts a tapped formula.
      *
      * @param string $formula
      * @param string[] $tap
